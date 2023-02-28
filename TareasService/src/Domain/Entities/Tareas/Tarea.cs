@@ -24,7 +24,7 @@ namespace OSPeConTI.Tareas.Domain.Entities
         public EstadoTarea Estado { get; private set; }
         public TipoTarea Tipo { get; private set; }
         public Guid IdTareaPadre { get; private set; }
-        public List<Consecuencia> Consecuencias { get; private set; }
+        public List<Tarea> Consecuencias { get; private set; }
 
         public Tarea(Guid idReferencia, Guid idCreador, Guid idEjecutor, DateTime vigenteDesde, DateTime vencimiento, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, Guid idTareaPadre)
         {

@@ -10,16 +10,16 @@ using OSPeConTI.Tareas.Infrastructure.Repositories;
 namespace OSPeConTI.Tareas.Application.Commands
 {
     // Regular CommandHandler
-    public class AddSectorCommandHandler : IRequestHandler<AddSectorCommand, Guid>
+    public class UpdateSectorCommandHandler : IRequestHandler<UpdateSectorCommand, bool>
     {
         private readonly SectorRepository _SectorRepository;
 
-        public AddSectorCommandHandler(SectorRepository SectorRepository)
+        public UpdateSectorCommandHandler(SectorRepository SectorRepository)
         {
             _SectorRepository = SectorRepository;
         }
 
-        public async Task<Guid> Handle(AddSectorCommand command, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateSectorCommand command, CancellationToken cancellationToken)
         {
 
             Sector Sector = new Sector(command.Descripcion);
@@ -28,7 +28,7 @@ namespace OSPeConTI.Tareas.Application.Commands
 
             await _SectorRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 
-            return Sector.Id;
+            return true;
         }
     }
 }

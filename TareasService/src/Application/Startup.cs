@@ -110,7 +110,6 @@ namespace OSPeConTI.Tareas.Application
 
 
             services.AddScoped(typeof(ISectorRepository), typeof(SectorRepository));
-            services.AddScoped(typeof(IConsecuenciaRepository), typeof(ConsecuenciaRepository));
             services.AddScoped(typeof(ITareaRepository), typeof(TareaRepository));
 
 

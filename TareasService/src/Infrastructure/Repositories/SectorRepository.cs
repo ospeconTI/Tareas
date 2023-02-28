@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections;
 using OSPeConTI.Tareas.Domain.Repositories;
+using System.Collections.Generic;
 
 namespace OSPeConTI.Tareas.Infrastructure.Repositories
 {
@@ -27,19 +28,21 @@ namespace OSPeConTI.Tareas.Infrastructure.Repositories
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Sector Add(Sector Sector)
+        public Sector Add(Sector sector)
         {
-            return _context.Sectores.Add(Sector).Entity;
+            return _context.Sectores.Add(sector).Entity;
+
         }
-        public Sector Update(Sector Sector)
+        public Sector Update(Sector sector)
         {
-            return _context.Sectores.Update(Sector).Entity;
+            return _context.Sectores.Update(sector).Entity;
         }
 
         public async Task<Sector> GetAsync(Guid id)
         {
             var item = await _context
                                 .Sectores
+                                .Include(i => i.Usuarios)
                                 .FirstOrDefaultAsync(o => o.Id == id);
             if (item == null)
             {
@@ -52,20 +55,20 @@ namespace OSPeConTI.Tareas.Infrastructure.Repositories
             return item;
         }
 
-        public async Task<Sector> GetSectorByNameAsync(string descripcion)
+        public async Task<IEnumerable<Sector>> GetAllAsync()
         {
-            var clasif = await _context
-                    .Sectores
-                    .FirstOrDefaultAsync(o => o.Descripcion == descripcion);
+            var items = await _context.Sectores.Include(i => i.Usuarios).ToListAsync();
 
-            return clasif;
+            if (items == null)
+            {
+                items = _context
+                            .Sectores
+                            .Local
+                            .ToList();
+            }
+
+            return items;
         }
-
-        public Task<Sector> GetByIdAsync(Guid Id)
-        {
-            throw new NotImplementedException();
-        }
-
 
     }
 }

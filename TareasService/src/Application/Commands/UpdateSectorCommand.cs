@@ -7,21 +7,19 @@ using System.Runtime.Serialization;
 namespace OSPeConTI.Tareas.Application.Commands
 {
     [DataContract]
-    public class AddSectorCommand : IRequest<Guid>
+    public class UpdateSectorCommand : IRequest<bool>
     {
         [DataMember]
         public string Descripcion { get; set; }
 
-
-        public AddSectorCommand()
+        public UpdateSectorCommand()
         {
 
         }
-        public AddSectorCommand(string descripcion)
+        public UpdateSectorCommand(string descripcion)
 
         {
             Descripcion = descripcion;
-
         }
 
     }

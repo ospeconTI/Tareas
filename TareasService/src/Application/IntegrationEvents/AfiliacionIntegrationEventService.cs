@@ -16,20 +16,20 @@ namespace OSPeConTI.Tareas.Application.IntegrationEvents
     {
         private readonly Func<DbConnection, IIntegrationEventLogService> _integrationEventLogServiceFactory;
         private readonly IEventBus _eventBus;
-        private readonly ReferenciasContext _ReferenciasContext;
+        private readonly TareasContext _tareasContext;
         private readonly IIntegrationEventLogService _eventLogService;
         private readonly ILogger<AfiliacionIntegrationEventService> _logger;
 
         public AfiliacionIntegrationEventService(IEventBus eventBus,
-            ReferenciasContext ReferenciasContext,
+            TareasContext tareasContext,
             IntegrationEventLogContext eventLogContext,
             Func<DbConnection, IIntegrationEventLogService> integrationEventLogServiceFactory,
             ILogger<AfiliacionIntegrationEventService> logger)
         {
-            _ReferenciasContext = ReferenciasContext ?? throw new ArgumentNullException(nameof(ReferenciasContext));
+            _tareasContext = tareasContext ?? throw new ArgumentNullException(nameof(tareasContext));
             _integrationEventLogServiceFactory = integrationEventLogServiceFactory ?? throw new ArgumentNullException(nameof(integrationEventLogServiceFactory));
             _eventBus = eventBus ?? throw new ArgumentNullException(nameof(eventBus));
-            _eventLogService = _integrationEventLogServiceFactory(_ReferenciasContext.Database.GetDbConnection());
+            _eventLogService = _integrationEventLogServiceFactory(_tareasContext.Database.GetDbConnection());
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 

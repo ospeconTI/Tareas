@@ -20,7 +20,7 @@ namespace OSPeConTI.Tareas.Infrastructure
     {
         public const string DEFAULT_SCHEMA = "dbo";
         //public DbSet<Afiliados> Afiliados { get; set; }
-        public DbSet<Consecuencia> Consecuencias { get; set; }
+
         public DbSet<Sector> Sectores { get; set; }
         public DbSet<Tarea> Tareas { get; set; }
 
@@ -46,7 +46,6 @@ namespace OSPeConTI.Tareas.Infrastructure
         {
 
 
-            modelBuilder.ApplyConfiguration(new ConsecuenciaEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new SectorEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TareaEntityTypeConfiguration());
 
