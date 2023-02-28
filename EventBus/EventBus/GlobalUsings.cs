@@ -1,6 +1,6 @@
-﻿global using OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.Abstractions;
-global using OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.Events;
-global using static OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.InMemoryEventBusSubscriptionsManager;
+﻿global using OSPeConTI.Tareas.BuildingBlocks.EventBus.Abstractions;
+global using OSPeConTI.Tareas.BuildingBlocks.EventBus.Events;
+global using static OSPeConTI.Tareas.BuildingBlocks.EventBus.InMemoryEventBusSubscriptionsManager;
 global using System.Collections.Generic;
 global using System.Linq;
 global using System.Text.Json.Serialization;

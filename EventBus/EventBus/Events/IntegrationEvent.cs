@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.Events;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.EventBus.Events;
 
 public record IntegrationEvent
 {

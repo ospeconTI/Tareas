@@ -1,5 +1,5 @@
 ﻿
-namespace OSPeConTI.ReferenciasService.BuildingBlocks.IntegrationEventLogEF.Services;
+namespace OSPeConTI.Tareas.BuildingBlocks.IntegrationEventLogEF.Services;
 
 public interface IIntegrationEventLogService
 {

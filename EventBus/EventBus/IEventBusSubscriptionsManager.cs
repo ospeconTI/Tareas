@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.EventBus;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.EventBus;
 
 public interface IEventBusSubscriptionsManager
 {

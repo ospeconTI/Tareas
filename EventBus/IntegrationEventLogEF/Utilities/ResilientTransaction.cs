@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.IntegrationEventLogEF.Utilities;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.IntegrationEventLogEF.Utilities;
 
 public class ResilientTransaction
 {

@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.Extensions;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.EventBus.Extensions;
 
 public static class GenericTypeExtensions
 {

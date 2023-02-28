@@ -1,4 +1,4 @@
-using OSPeConTI.ReferenciasService.BuildingBlocks.EventBus;
+using OSPeConTI.Tareas.BuildingBlocks.EventBus;
 using System;
 using System.Linq;
 using Xunit;

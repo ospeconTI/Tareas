@@ -1,4 +1,4 @@
-namespace OSPeConTI.ReferenciasService.BuildingBlocks.EventBusServiceBus;
+namespace OSPeConTI.Tareas.BuildingBlocks.EventBusServiceBus;
 
 public class EventBusServiceBus : IEventBus, IDisposable
 {

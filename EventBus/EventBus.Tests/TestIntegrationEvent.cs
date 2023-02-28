@@ -1,4 +1,4 @@
-﻿using OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.Events;
+﻿using OSPeConTI.Tareas.BuildingBlocks.EventBus.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;

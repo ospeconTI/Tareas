@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.IntegrationEventLogEF.Services;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.IntegrationEventLogEF.Services;
 
 public class IntegrationEventLogService : IIntegrationEventLogService, IDisposable
 {

@@ -1,4 +1,4 @@
-﻿using OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.Abstractions;
+﻿using OSPeConTI.Tareas.BuildingBlocks.EventBus.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Text;

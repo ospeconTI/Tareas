@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.EventBusRabbitMQ;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.EventBusRabbitMQ;
 
 public class DefaultRabbitMQPersistentConnection
     : IRabbitMQPersistentConnection

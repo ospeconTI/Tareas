@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace OSPeConTI.ReferenciasService.BuildingBlocks.IntegrationEventLogEF;
+namespace OSPeConTI.Tareas.BuildingBlocks.IntegrationEventLogEF;
 
 public class IntegrationEventLogContext : DbContext
 {

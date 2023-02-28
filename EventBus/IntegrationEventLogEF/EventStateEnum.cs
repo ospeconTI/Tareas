@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.IntegrationEventLogEF;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.IntegrationEventLogEF;
 
 public enum EventStateEnum
 {

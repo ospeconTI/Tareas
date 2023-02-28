@@ -1,4 +1,4 @@
-﻿namespace OSPeConTI.ReferenciasService.BuildingBlocks.EventBus.Abstractions;
+﻿namespace OSPeConTI.Tareas.BuildingBlocks.EventBus.Abstractions;
 
 public interface IEventBus
 {
