@@ -9,9 +9,7 @@ namespace OSPeConTI.Tareas.Domain.Entities
     public class Tarea : Entity, IAggregateRoot
     {
 
-        public Guid IdReferencia { get; private set; }
-        public Guid IdCreador { get; private set; }
-        public Guid IdEjecutor { get; private set; }
+        public Guid ReferenciaId { get; private set; }
         public Sector Creador { get; private set; }
         public Sector Ejecutor { get; private set; }
         public DateTime Creacion { get; private set; }
@@ -20,22 +18,22 @@ namespace OSPeConTI.Tareas.Domain.Entities
         public int Alerta { get; private set; }
         public string Descripcion { get; private set; }
         public string Instrucciones { get; private set; }
-        public List<string> Adjuntos { get; private set; }
+        public List<Link> Adjuntos { get; private set; }
         public EstadoTarea Estado { get; private set; }
         public TipoTarea Tipo { get; private set; }
-        public Guid IdTareaPadre { get; private set; }
         public List<Tarea> Consecuencias { get; private set; }
 
-        public Tarea(Guid idReferencia, Guid idCreador, Guid idEjecutor, DateTime vigenteDesde, DateTime vencimiento, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, Guid idTareaPadre)
+        public Tarea() { }
+        public Tarea(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, DateTime vencimiento, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea)
         {
 
             if (vigenteDesde < DateTime.Now) throw new TareaDomainException("La Tarea no puede estar vigente antes del día de su creación");
             if (Vencimiento < vigenteDesde.AddDays(alerta)) throw new TareaDomainException("No puede crear una tarea vencida");
             if (descripcion == string.Empty) throw new TareaDomainException("La descripción de la tarea no puede estar vacia");
 
-            IdReferencia = idReferencia;
-            IdCreador = idCreador;
-            IdEjecutor = idEjecutor;
+            ReferenciaId = referenciaId;
+            Creador = creador;
+            Ejecutor = ejecutor;
             Creacion = DateTime.Now;
             VigenteDesde = vigenteDesde;
             Vencimiento = vencimiento;
@@ -43,28 +41,41 @@ namespace OSPeConTI.Tareas.Domain.Entities
             Descripcion = descripcion;
             Instrucciones = instrucciones;
             Tipo = tipoTarea;
-            IdTareaPadre = idTareaPadre;
+
         }
-        public void DarCumplimiento() { }
-        public void Postergar(int Dias) { }
-        public void Anular(string Motivo) { }
-        public void Pausar(string Motivo) { }
-        public void SumarConsecuencia(Tarea tarea, EstadoTarea estado)
+
+        public void DarVencimiento()
         {
-            //puede agregar consecuencia 
-            if (this.Tipo == TipoTarea.Compleja)
-            {
-
-            }
+            Estado = EstadoTarea.Vencida;
         }
-        public void QuitarConsecuencia(Guid idTarea)
+        public void DarCumplimiento()
+        {
+            Estado = EstadoTarea.Cumplida;
+        }
+        public void Postergar(int Dias)
+        {
+            Estado = EstadoTarea.Pendiente;
+        }
+        public void Anular(string Motivo)
+        {
+            Estado = EstadoTarea.Anulada;
+        }
+        public void Pausar(string Motivo)
+        {
+            Estado = EstadoTarea.Pausada;
+        }
+        public void SumarConsecuencia(Tarea tarea)
         {
 
-        }
+            if (this.Tipo == TipoTarea.Compleja) throw new TareaDomainException("Solo se pueden agregar tareas a tareas complejas");
+            if (tarea.Consecuencias.Contains(tarea)) throw new TareaDomainException("La tarea ya fue asignada");
 
-        public void Clonar() { } // Crear un tarea idéntica e independiente
-        public void Clonar(int Cantidad, int Periodo) { } // Crear varias tareas idénticas e independientes
-        public void CrearTareaConsecuente(int Periodo) { } // Crear una tarea idéntica pero dependiente
-        public void CrearTareasConsecuente(List<Tarea> Tareas, int Periodo) { } // Crear varias tareas diferentes y dependientes
+            this.Consecuencias.Add(tarea);
+        }
+        public void QuitarConsecuencia(Tarea tarea)
+        {
+            if (Estado == EstadoTarea.Cumplida || Estado == EstadoTarea.Anulada) throw new TareaDomainException("No se puede remover porque la tarea ha finalizado");
+            this.Consecuencias.Remove(tarea);
+        }
     }
 }

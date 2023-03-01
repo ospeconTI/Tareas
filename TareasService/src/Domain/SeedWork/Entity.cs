@@ -21,19 +21,7 @@ namespace OSPeConTI.Tareas.Domain.SeedWork
             }
         }
 
-        int _LegacyId;
 
-        public virtual int LegacyId
-        {
-            get
-            {
-                return _LegacyId;
-            }
-            protected set
-            {
-                _LegacyId = value;
-            }
-        }
 
         bool _Activo;
         public virtual bool Activo

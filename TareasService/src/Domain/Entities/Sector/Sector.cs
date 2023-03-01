@@ -19,12 +19,17 @@ namespace OSPeConTI.Tareas.Domain.Entities
         }
 
         public string Descripcion { get; private set; }
-        public List<Guid> Usuarios { get; private set; }
+        public List<Usuario> Usuarios { get; private set; }
 
-        public void sumarIntegrante(Guid usuario)
+        public void sumarIntegrante(Usuario usuario)
         {
-            if (Usuarios == null) Usuarios = new List<Guid>();
-            if (Usuarios.Find(u => u == usuario) != null) throw new SectorDomainException("El usuario ya existe en el sector");
+            if (usuario.Identificacion == Guid.Empty) throw new SectorDomainException("El usuario Debe tener un Identificador");
+            if (usuario.Apellido == string.Empty) throw new SectorDomainException("El usuario Debe tener Apellido");
+            if (usuario.Email == string.Empty) throw new SectorDomainException("El usuario Debe tener email");
+
+            if (Usuarios == null) Usuarios = new List<Usuario>();
+            if (Usuarios.FirstOrDefault(u => u.Identificacion == usuario.Identificacion) != null) throw new SectorDomainException("El usuario ya existe en el sector");
+
             Usuarios.Add(usuario);
         }
 

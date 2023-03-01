@@ -76,7 +76,7 @@ namespace OSPeConTI.Tareas.Application
             services.AddControllers();
             services.AddSwaggerGen(c =>
                {
-                   c.SwaggerDoc("v1", new OpenApiInfo { Title = "Afiliaciones", Version = "v1" });
+                   c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tareas", Version = "v1" });
                });
             //services.AddOData();
 
@@ -111,7 +111,7 @@ namespace OSPeConTI.Tareas.Application
 
             services.AddScoped(typeof(ISectorRepository), typeof(SectorRepository));
             services.AddScoped(typeof(ITareaRepository), typeof(TareaRepository));
-
+            services.AddScoped<ISectorQueries>(conns => new SectorQueries(Configuration.GetConnectionString("DefaultConnection")));
 
             /*      services.AddScoped<INacionalidadQueries>(conns => new NacionalidadQueries(Configuration.GetConnectionString("DefaultConnection")));
                  services.AddScoped<IEstadoCivilQueries>(conns => new EstadoCivilQueries(Configuration.GetConnectionString("DefaultConnection")));
@@ -138,7 +138,7 @@ namespace OSPeConTI.Tareas.Application
 
 
             services.AddHttpClient();
-            services.AddOdataSwaggerSupport();
+            //services.AddOdataSwaggerSupport();
             //services.AddTransient<AfiliadoModificadoIntegrationEventHandler>();
             //services.AddTransient<IAfiliacionIntegrationEventService, AfiliacionIntegrationEventService>();
             services.AddEventBus(Configuration);

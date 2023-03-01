@@ -9,8 +9,8 @@ namespace OSPeConTI.Tareas.Domain.Repositories
     {
         Tarea Add(Tarea tarea);
         Tarea Update(Tarea tarea);
-        Task<Tarea> GetAsync(Guid Id);
-        Task<IEnumerable<Tarea>> GetAllAsync();
+        Task<Tarea> GetAsync(Guid id);
+        Task<IEnumerable<Tarea>> GetByReferenciaAsync(Guid idReferencia);
 
     }
 }

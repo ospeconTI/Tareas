@@ -30,22 +30,45 @@ namespace OSPeConTI.Tareas.Infrastructure.Repositories
 
         public Tarea Add(Tarea tarea)
         {
-            throw new NotImplementedException();
+            return _context.Tareas.Add(tarea).Entity;
         }
 
         public Tarea Update(Tarea tarea)
         {
-            throw new NotImplementedException();
+            return _context.Tareas.Update(tarea).Entity;
         }
 
-        public Task<Tarea> GetAsync(Guid Id)
+        public async Task<Tarea> GetAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var item = await _context
+                                .Tareas
+                                .Include(i => i.Consecuencias)
+                                .FirstOrDefaultAsync(o => o.Id == id);
+            if (item == null)
+            {
+                item = _context
+                            .Tareas
+                            .Local
+                            .FirstOrDefault(o => o.Id == id);
+            }
+
+            return item;
         }
 
-        public Task<IEnumerable<Tarea>> GetAllAsync()
+        public async Task<IEnumerable<Tarea>> GetByReferenciaAsync(Guid referenciaId)
         {
-            throw new NotImplementedException();
+            var items = await _context.Tareas.Include(i => i.Consecuencias).Where(w => w.ReferenciaId == referenciaId).ToListAsync();
+
+            if (items == null)
+            {
+                items = _context
+                            .Tareas
+                            .Local
+                            .Where(w => w.ReferenciaId == referenciaId)
+                            .ToList();
+            }
+
+            return items;
         }
     }
 }

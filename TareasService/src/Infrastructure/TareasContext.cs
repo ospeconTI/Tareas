@@ -167,7 +167,7 @@ namespace OSPeConTI.Tareas.Infrastructure
             string env = args.Length == 0 ? "" : args[0];
             IConfigurationRoot configuration = null;
 
-            if (env != "Prod" && env != "Dev") throw new Exception("Indique el entorno (\"Prod\" para produción o \"Dev\" para Desarrollo, ejemplo: dotnet ef database update -s ../application --context ReferenciasContext -- \"Prod\")");
+            if (env != "Prod" && env != "Dev") throw new Exception("Indique el entorno (\"Prod\" para produción o \"Dev\" para Desarrollo, ejemplo: dotnet ef database update -s ../application --context TareasContext -- \"Prod\")");
 
             if (env == "Prod")
             {

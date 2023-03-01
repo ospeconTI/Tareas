@@ -14,6 +14,10 @@ namespace OSPeConTI.Tareas.Infrastructure.EntityConfigurations
 
             TareaConfiguration.Ignore(b => b.DomainEvents);
 
+            TareaConfiguration.Property(p => p.Estado).HasConversion(v => v.Nombre, v => EstadoTarea.FromName(v));
+
+            TareaConfiguration.Property(p => p.Tipo).HasConversion(v => v.Nombre, v => TipoTarea.FromName(v));
+
         }
     }
 }
