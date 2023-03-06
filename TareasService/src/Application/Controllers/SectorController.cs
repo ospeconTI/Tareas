@@ -76,5 +76,13 @@ namespace OSPeConTI.Tareas.Application
             await _mediator.Send(command);
             return Ok();
         }
+
+        [Route("QuitarIntegrante")]
+        [HttpPut]
+        public async Task<IActionResult> QuitarIntegrante([FromBody] QuitarIntegranteCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
     }
 }

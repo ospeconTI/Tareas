@@ -37,9 +37,18 @@ namespace OSPeConTI.Tareas.Domain.Entities
             if (usuario.Email == string.Empty) throw new SectorDomainException("El usuario Debe tener email");
 
             if (Usuarios == null) Usuarios = new List<Usuario>();
+
+
             if (Usuarios.FirstOrDefault(u => u.Identificacion == usuario.Identificacion) != null) throw new SectorDomainException("El usuario ya existe en el sector");
 
             Usuarios.Add(usuario);
+        }
+
+        public void QuitarIntegrante(Usuario usuario)
+        {
+            if (usuario == null) throw new SectorDomainException("Debe especificar un usuario");
+
+            Usuarios.Remove(usuario);
         }
 
     }

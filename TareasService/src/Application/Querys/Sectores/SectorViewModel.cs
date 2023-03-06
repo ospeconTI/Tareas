@@ -11,6 +11,19 @@ namespace OSPeConTI.Tareas.Application.Queries
         }
         public Guid Id { get; set; }
         public string Descripcion { get; set; }
+        public List<UsuarioDTO> Usuarios { get; set; }
+
+
+    }
+    public class UsuarioDTO
+    {
+        public UsuarioDTO()
+        {
+        }
+        public Guid Id { get; set; }
+        public string Apellido { get; set; }
+        public string Nombre { get; set; }
+        public string Email { get; set; }
 
 
     }
