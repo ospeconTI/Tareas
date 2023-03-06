@@ -21,7 +21,16 @@ namespace OSPeConTI.Tareas.Domain.Entities
         public string Descripcion { get; private set; }
         public List<Usuario> Usuarios { get; private set; }
 
-        public void sumarIntegrante(Usuario usuario)
+        public void Update(string descripcion)
+        {
+            if (descripcion == string.Empty) throw new SectorDomainException("La descripcion no puede quedar vacia");
+            Descripcion = descripcion;
+
+        }
+
+
+
+        public void SumarIntegrante(Usuario usuario)
         {
             if (usuario.Identificacion == Guid.Empty) throw new SectorDomainException("El usuario Debe tener un Identificador");
             if (usuario.Apellido == string.Empty) throw new SectorDomainException("El usuario Debe tener Apellido");

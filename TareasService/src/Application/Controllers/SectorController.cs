@@ -18,6 +18,7 @@ namespace OSPeConTI.Tareas.Application
         private readonly IMediator _mediator;
         private readonly ISectorQueries _SectorQueries;
 
+
         public SectorController(
             IMediator mediator,
             ISectorQueries Sector)

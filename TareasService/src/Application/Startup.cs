@@ -109,8 +109,8 @@ namespace OSPeConTI.Tareas.Application
             //services.AddTransient(typeof(INotificationHandler<AfiliadosAgregadoRequested>), typeof(AfiliadosAgregadoHandler));
 
 
-            services.AddScoped(typeof(ISectorRepository), typeof(SectorRepository));
-            services.AddScoped(typeof(ITareaRepository), typeof(TareaRepository));
+            services.AddScoped(typeof(SectorRepository), typeof(SectorRepository));
+            services.AddScoped(typeof(TareaRepository), typeof(TareaRepository));
             services.AddScoped<ISectorQueries>(conns => new SectorQueries(Configuration.GetConnectionString("DefaultConnection")));
 
             /*      services.AddScoped<INacionalidadQueries>(conns => new NacionalidadQueries(Configuration.GetConnectionString("DefaultConnection")));

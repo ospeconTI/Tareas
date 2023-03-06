@@ -12,14 +12,18 @@ namespace OSPeConTI.Tareas.Application.Commands
         [DataMember]
         public string Descripcion { get; set; }
 
+        [DataMember]
+        public Guid Id { get; set; }
+
         public UpdateSectorCommand()
         {
 
         }
-        public UpdateSectorCommand(string descripcion)
+        public UpdateSectorCommand(Guid id, string descripcion)
 
         {
             Descripcion = descripcion;
+            Id = id;
         }
 
     }
