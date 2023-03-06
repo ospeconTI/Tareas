@@ -67,5 +67,14 @@ namespace OSPeConTI.Tareas.Application
             await _mediator.Send(command);
             return Ok();
         }
+
+
+        [Route("SumarIntegrante")]
+        [HttpPut]
+        public async Task<IActionResult> SumarIntegranteAsync([FromBody] SumarIntegranteCommand command)
+        {
+            await _mediator.Send(command);
+            return Ok();
+        }
     }
 }
