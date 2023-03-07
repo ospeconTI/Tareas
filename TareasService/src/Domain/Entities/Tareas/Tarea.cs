@@ -21,37 +21,134 @@ namespace OSPeConTI.Tareas.Domain.Entities
         public List<Link> Adjuntos { get; private set; }
         public EstadoTarea Estado { get; private set; }
         public TipoTarea Tipo { get; private set; }
+        public int Item { get; private set; }
+        public int Cantidad { get; private set; }
+        public int Lapso { get; private set; }
+        public bool EsPorLapso
+        {
+            get
+            {
+                return Lapso != 0;
+            }
+        }
         public List<Tarea> Consecuencias { get; private set; }
 
         public Tarea() { }
-        public Tarea(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, DateTime vencimiento, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea)
-        {
 
+        private static Tarea Crear(TipoTarea tipo, Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, List<Tarea> consecuencias)
+        {
             if (vigenteDesde < DateTime.Now) throw new TareaDomainException("La Tarea no puede estar vigente antes del día de su creación");
-            if (Vencimiento < vigenteDesde.AddDays(alerta)) throw new TareaDomainException("No puede crear una tarea vencida");
             if (descripcion == string.Empty) throw new TareaDomainException("La descripción de la tarea no puede estar vacia");
 
-            ReferenciaId = referenciaId;
-            Creador = creador;
-            Ejecutor = ejecutor;
-            Creacion = DateTime.Now;
-            VigenteDesde = vigenteDesde;
-            Vencimiento = vencimiento;
-            Alerta = alerta;
-            Descripcion = descripcion;
-            Instrucciones = instrucciones;
-            Tipo = tipoTarea;
+            Tarea tarea = new Tarea();
+            tarea.Tipo = tipo;
+
+            tarea.ReferenciaId = referenciaId;
+            tarea.Creador = creador;
+            tarea.Ejecutor = ejecutor;
+            tarea.Creacion = DateTime.Now;
+            tarea.VigenteDesde = vigenteDesde;
+            tarea.Vencimiento = vigenteDesde.AddDays(venceEn);
+            tarea.Alerta = alerta;
+            tarea.Descripcion = descripcion;
+            tarea.Instrucciones = instrucciones;
+            tarea.Estado = EstadoTarea.Pendiente;
+            tarea.Consecuencias = consecuencias;
+
+            return tarea;
 
         }
 
-        public void DarVencimiento()
+        public static Tarea CrearSimple(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea)
+        {
+            return Crear(TipoTarea.Simple, referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, null);
+        }
+
+        public static Tarea CrearCompleja(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, List<Tarea> consecuencias)
+        {
+            return Crear(TipoTarea.Compleja, referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, consecuencias);
+        }
+
+        public static Tarea CrearMultiplesPorLapso(int cantidad, int lapsoEnDias, Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, List<Tarea> consecuencias = null)
+        {
+
+            Tarea tarea;
+            if (consecuencias == null)
+            {
+                tarea = Tarea.CrearSimple(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea);
+
+            }
+            else
+            {
+                tarea = Tarea.CrearCompleja(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, consecuencias);
+
+            }
+            tarea.Lapso = lapsoEnDias;
+            tarea.Cantidad = cantidad;
+            tarea.Item = tarea.Item + 1;
+
+            return tarea;
+
+        }
+
+        public static List<Tarea> CrearMultiplesEnFecha(int cantidad, int diaDelMes, Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, List<Tarea> consecuencias = null)
+        {
+
+            List<Tarea> tareas = new List<Tarea>();
+
+            int anio = DateTime.Now.Year;
+            int mes = DateTime.Now.Month;
+            for (var x = 0; x < cantidad; x = x + 1)
+            {
+                mes = mes + cantidad;
+                if (mes > 12)
+                {
+                    mes = 1;
+                    anio = anio + 1;
+                };
+                vigenteDesde = new DateTime(diaDelMes, mes, anio);
+                if (consecuencias == null)
+                {
+
+                    Tarea.CrearSimple(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea);
+                }
+                else
+                {
+                    Tarea.CrearCompleja(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, consecuencias);
+                }
+
+            }
+
+            return tareas;
+
+        }
+        private static Tarea CrearSiguiente(Tarea tarea)
+        {
+            return Tarea.CrearMultiplesPorLapso(tarea.Cantidad, tarea.Lapso, tarea.ReferenciaId, tarea.Creador, tarea.Ejecutor, DateTime.Now, (tarea.VigenteDesde - tarea.Vencimiento).Days, tarea.Alerta, tarea.Descripcion, tarea.Instrucciones, tarea.Tipo, tarea.Consecuencias);
+        }
+
+
+        public Tarea DarVencimiento()
         {
             Estado = EstadoTarea.Vencida;
+
+            Tarea tareaSiguiente = null;
+
+            if (EsPorLapso && Cantidad > Item) tareaSiguiente = CrearSiguiente(this);
+
+            return tareaSiguiente;
         }
-        public void DarCumplimiento()
+        public Tarea DarCumplimiento()
         {
             Estado = EstadoTarea.Cumplida;
+
+            Tarea tareaSiguiente = null;
+
+            if (EsPorLapso && Cantidad > Item) tareaSiguiente = CrearSiguiente(this);
+
+            return tareaSiguiente;
         }
+
         public void Postergar(int Dias)
         {
             Estado = EstadoTarea.Pendiente;
