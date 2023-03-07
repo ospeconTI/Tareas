@@ -35,7 +35,7 @@ namespace OSPeConTI.Tareas.Domain.Entities
 
         public Tarea() { }
 
-        private static Tarea Crear(TipoTarea tipo, Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, List<Tarea> consecuencias)
+        private static Tarea Crear(TipoTarea tipo, Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, List<Tarea> consecuencias)
         {
             if (vigenteDesde < DateTime.Now) throw new TareaDomainException("La Tarea no puede estar vigente antes del día de su creación");
             if (descripcion == string.Empty) throw new TareaDomainException("La descripción de la tarea no puede estar vacia");
@@ -59,14 +59,14 @@ namespace OSPeConTI.Tareas.Domain.Entities
 
         }
 
-        public static Tarea CrearSimple(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea)
+        public static Tarea CrearSimple(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones)
         {
-            return Crear(TipoTarea.Simple, referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, null);
+            return Crear(TipoTarea.Simple, referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, null);
         }
 
-        public static Tarea CrearCompleja(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, List<Tarea> consecuencias)
+        public static Tarea CrearCompleja(Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, List<Tarea> consecuencias)
         {
-            return Crear(TipoTarea.Compleja, referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, consecuencias);
+            return Crear(TipoTarea.Compleja, referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, consecuencias);
         }
 
         public static Tarea CrearMultiplesPorLapso(int cantidad, int lapsoEnDias, Guid referenciaId, Sector creador, Sector ejecutor, DateTime vigenteDesde, int venceEn, int alerta, string descripcion, string instrucciones, TipoTarea tipoTarea, List<Tarea> consecuencias = null)
@@ -75,12 +75,12 @@ namespace OSPeConTI.Tareas.Domain.Entities
             Tarea tarea;
             if (consecuencias == null)
             {
-                tarea = Tarea.CrearSimple(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea);
+                tarea = Tarea.CrearSimple(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones);
 
             }
             else
             {
-                tarea = Tarea.CrearCompleja(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, consecuencias);
+                tarea = Tarea.CrearCompleja(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, consecuencias);
 
             }
             tarea.Lapso = lapsoEnDias;
@@ -110,11 +110,11 @@ namespace OSPeConTI.Tareas.Domain.Entities
                 if (consecuencias == null)
                 {
 
-                    Tarea.CrearSimple(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea);
+                    Tarea.CrearSimple(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones);
                 }
                 else
                 {
-                    Tarea.CrearCompleja(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, tipoTarea, consecuencias);
+                    Tarea.CrearCompleja(referenciaId, creador, ejecutor, vigenteDesde, venceEn, alerta, descripcion, instrucciones, consecuencias);
                 }
 
             }

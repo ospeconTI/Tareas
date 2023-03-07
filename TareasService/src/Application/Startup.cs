@@ -112,6 +112,7 @@ namespace OSPeConTI.Tareas.Application
             services.AddScoped(typeof(SectorRepository), typeof(SectorRepository));
             services.AddScoped(typeof(TareaRepository), typeof(TareaRepository));
             services.AddScoped<ISectorQueries>(conns => new SectorQueries(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<ITareaQueries>(conns => new TareaQueries(Configuration.GetConnectionString("DefaultConnection")));
 
             /*      services.AddScoped<INacionalidadQueries>(conns => new NacionalidadQueries(Configuration.GetConnectionString("DefaultConnection")));
                  services.AddScoped<IEstadoCivilQueries>(conns => new EstadoCivilQueries(Configuration.GetConnectionString("DefaultConnection")));
